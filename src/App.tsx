@@ -1,5 +1,6 @@
-import { FC } from "react"; // FC stands for functional components it will return JSX
-import { createTheme } from "@mui/material";
+import { FC, useEffect, useState } from "react"; // FC stands for functional components it will return JSX
+import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import { getWishes, Wish } from "./services/wishes";
 
 const theme = createTheme({
   typography: {
@@ -21,5 +22,15 @@ const theme = createTheme({
 });
 
 export const App: FC = () => {
-  return <></>;
+  const [wishes, setWishes] = useState<Wish[]>([]);
+
+  useEffect(() => {
+    getWishes().then(setWishes);
+  }, []);
+
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+    </ThemeProvider>
+  );
 };
